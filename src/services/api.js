@@ -1,5 +1,12 @@
 // PyData Prayagraj Fast API Service Layer with Permanent Persistence
-const rawApiUrl = String(import.meta.env.VITE_API_URL || '/api').trim();
+const envApiUrl = import.meta.env.VITE_API_URL ? String(import.meta.env.VITE_API_URL).trim() : '';
+let rawApiUrl = envApiUrl;
+
+// If hosted on GitHub Pages or if VITE_API_URL is relative/empty, default to Render live API
+if (!rawApiUrl || rawApiUrl === '/api' || !rawApiUrl.startsWith('http')) {
+  rawApiUrl = 'https://pydata-backend.onrender.com/api';
+}
+
 let base = rawApiUrl.endsWith('/') ? rawApiUrl.slice(0, -1) : rawApiUrl;
 if (!base.endsWith('/api') && base.startsWith('http')) {
   base += '/api';
@@ -38,6 +45,21 @@ const getLocalCache = (key, fallback) => {
   return fallback;
 };
 
+// Safe JSON Fetch Helper
+async function safeFetchJson(url, options = {}) {
+  const headers = {
+    'Accept': 'application/json',
+    'ngrok-skip-browser-warning': 'true',
+    ...(options.headers || {})
+  };
+  const res = await fetch(url, { ...options, headers });
+  const contentType = res.headers.get('content-type') || '';
+  if (res.ok && contentType.includes('application/json')) {
+    return await res.json();
+  }
+  throw new Error(`HTTP ${res.status}: invalid response format or offline`);
+}
+
 // Date Formatter Helper ("Aug 19, 2026")
 export function formatDate(dateString) {
   if (!dateString) return '';
@@ -64,70 +86,65 @@ export function formatDate(dateString) {
 // API Fetch Methods
 export async function fetchEvents() {
   try {
-    const res = await fetch(`${API_BASE_URL}/events`);
-    if (res.ok) {
-      const data = await res.json();
+    const data = await safeFetchJson(`${API_BASE_URL}/events`);
+    if (data) {
       saveLocalCache('pydata_cache_events', data);
       return data;
     }
   } catch (e) {
-    console.warn('Backend API offline or restarting, serving local cache.', e);
+    // Silently serve local cache if backend is starting
   }
   return getLocalCache('pydata_cache_events', defaultEvents);
 }
 
 export async function fetchGallery() {
   try {
-    const res = await fetch(`${API_BASE_URL}/gallery`);
-    if (res.ok) {
-      const data = await res.json();
+    const data = await safeFetchJson(`${API_BASE_URL}/gallery`);
+    if (data) {
       saveLocalCache('pydata_cache_gallery', data);
       return data;
     }
   } catch (e) {
-    console.warn('Backend API offline or restarting, serving local cache.', e);
+    // Silently serve local cache if backend is starting
   }
   return getLocalCache('pydata_cache_gallery', defaultGallery);
 }
 
 export async function fetchTeam() {
   try {
-    const res = await fetch(`${API_BASE_URL}/team`);
-    if (res.ok) {
-      const data = await res.json();
+    const data = await safeFetchJson(`${API_BASE_URL}/team`);
+    if (data) {
       saveLocalCache('pydata_cache_team', data);
       return data;
     }
   } catch (e) {
-    console.warn('Backend API offline or restarting, serving local cache.', e);
+    // Silently serve local cache if backend is starting
   }
   return getLocalCache('pydata_cache_team', defaultTeam);
 }
 
 export async function fetchSponsors() {
   try {
-    const res = await fetch(`${API_BASE_URL}/sponsors`);
-    if (res.ok) {
-      const data = await res.json();
+    const data = await safeFetchJson(`${API_BASE_URL}/sponsors`);
+    if (data) {
       saveLocalCache('pydata_cache_sponsors', data);
       return data;
     }
   } catch (e) {
-    console.warn('Backend API offline or restarting, serving local cache.', e);
+    // Silently serve local cache if backend is starting
   }
   return getLocalCache('pydata_cache_sponsors', defaultSponsors);
 }
 
 export async function fetchJournals() {
   try {
-    const res = await fetch(`${API_BASE_URL}/journals`);
-    if (res.ok) {
-      const data = await res.json();
+    const data = await safeFetchJson(`${API_BASE_URL}/journals`);
+    if (data) {
       saveLocalCache('pydata_cache_journals', data);
       return data;
     }
   } catch (e) {
-    console.warn('Backend API offline or restarting, serving local cache.', e);
+    // Silently serve local cache if backend is starting
   }
   return getLocalCache('pydata_cache_journals', defaultJournals);
 }
