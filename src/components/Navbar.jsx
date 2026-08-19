@@ -86,7 +86,7 @@ export default function Navbar() {
             aria-label="PyData Prayagraj Home"
           >
             <img
-              src="/pydata-icon.png"
+              src={import.meta.env.BASE_URL ? (import.meta.env.BASE_URL.endsWith('/') ? `${import.meta.env.BASE_URL}pydata-icon.png` : `${import.meta.env.BASE_URL}/pydata-icon.png`) : './pydata-icon.png'}
               alt="PyData Logo"
               className="h-8 sm:h-9 w-auto object-contain transition-transform group-hover:scale-105"
             />

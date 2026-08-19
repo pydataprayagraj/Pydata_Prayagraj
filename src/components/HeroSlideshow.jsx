@@ -21,8 +21,18 @@ export default function HeroSlideshow() {
     return () => clearInterval(pollInterval);
   }, []);
 
+  const getAssetUrl = (url) => {
+    if (!url) return '';
+    if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('data:')) {
+      return url;
+    }
+    const cleanUrl = url.startsWith('/') ? url.slice(1) : url;
+    const base = import.meta.env.BASE_URL || './';
+    return base.endsWith('/') ? `${base}${cleanUrl}` : `${base}/${cleanUrl}`;
+  };
+
   const defaultImages = [
-    { id: 'default-1', imageUrl: '/pydata-community-hero.jpg', title: 'PyData Community Showcase' }
+    { id: 'default-1', imageUrl: getAssetUrl('pydata-community-hero.jpg'), title: 'PyData Community Showcase' }
   ];
 
   const displayImages = heroImages.length > 0 ? heroImages : defaultImages;
@@ -55,7 +65,7 @@ export default function HeroSlideshow() {
                 <AnimatePresence mode="wait">
                   <motion.img
                     key={currentImage.id || activeIndex}
-                    src={currentImage.imageUrl}
+                    src={getAssetUrl(currentImage.imageUrl)}
                     alt={currentImage.title || "PyData Community"}
                     initial={{ opacity: 0, scale: 1.03 }}
                     animate={{ opacity: 1, scale: 1 }}
