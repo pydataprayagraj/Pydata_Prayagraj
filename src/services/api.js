@@ -150,19 +150,10 @@ export async function loginAdmin(emailOrUsername, password) {
       localStorage.setItem('pydata_admin_is_superadmin', isSuperAdmin ? 'true' : 'false');
       return { success: true, user: data.user };
     }
-    return { success: false, message: data.message || 'Authentication failed' };
+    return { success: false, message: data.message || 'Authentication failed. Invalid username or password.' };
   } catch (e) {
-    if (
-      (emailOrUsername.toLowerCase() === 'pydataprayagraj' && password === 'Pydatacoreteamprayagraj@2026') ||
-      (emailOrUsername === 'admin@pydataprayagraj.org' && password === 'SuperSecretPyDataAdmin2026!')
-    ) {
-      localStorage.setItem('pydata_admin_authenticated', 'true');
-      localStorage.setItem('pydata_admin_token', 'pydata_offline_token');
-      localStorage.setItem('pydata_admin_username', 'Pydataprayagraj');
-      localStorage.setItem('pydata_admin_is_superadmin', 'true');
-      return { success: true, user: { username: 'Pydataprayagraj', isSuperAdmin: true } };
-    }
-    return { success: false, message: 'Server unreachable and invalid credentials.' };
+    console.error('Login error:', e);
+    return { success: false, message: 'Unable to connect to backend server. Please check your internet connection or try again shortly.' };
   }
 }
 
