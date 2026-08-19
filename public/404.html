@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>PyData Prayagraj — Redirecting...</title>
+    <script>
+      // Single Page App redirect for GitHub Pages (handles /mainuser, /events, /team, etc.)
+      (function() {
+        var path = window.location.pathname;
+        var repoName = '/Pydata_Prayagraj';
+        
+        var route = path;
+        if (path.startsWith(repoName)) {
+          route = path.substring(repoName.length);
+        }
+        
+        if (!route || route === '/') {
+          route = '/';
+        }
+        
+        var targetUrl = window.location.origin + repoName + '/#' + route + window.location.search + window.location.hash;
+        window.location.replace(targetUrl);
+      })();
+    </script>
+  </head>
+  <body>
+  </body>
+</html>
