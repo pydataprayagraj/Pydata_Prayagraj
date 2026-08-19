@@ -11,14 +11,27 @@ const firebaseConfig = {
   appId: import.meta.env.VITE_FIREBASE_APP_ID || ''
 };
 
-// Initialize Firebase App safely if API key is provided
-const isConfigured = Boolean(firebaseConfig.apiKey && firebaseConfig.projectId);
-const app = isConfigured ? (getApps().length === 0 ? initializeApp(firebaseConfig) : getApp()) : null;
+let app = null;
+let dbInstance = null;
+let authInstance = null;
+let isConfigured = false;
 
-// Export Firestore & Auth instances safely
-export const db = app ? getFirestore(app) : null;
-export const auth = app ? getAuth(app) : null;
+try {
+  if (firebaseConfig.apiKey && firebaseConfig.projectId) {
+    app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
+    dbInstance = getFirestore(app);
+    authInstance = getAuth(app);
+    isConfigured = true;
+  }
+} catch (err) {
+  console.warn('Firebase client initialization notice (falling back to REST API):', err.message);
+  app = null;
+  dbInstance = null;
+  authInstance = null;
+  isConfigured = false;
+}
 
+export const db = dbInstance;
+export const auth = authInstance;
 export const isFirebaseConfigured = () => isConfigured;
-
 export default app;
