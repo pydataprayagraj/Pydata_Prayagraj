@@ -1,8 +1,19 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Handshake, ExternalLink } from 'lucide-react';
+import { Handshake, Mail, ArrowRight } from 'lucide-react';
+import { fetchSponsors } from '../services/api';
 
 export default function SponsorPage() {
+  const [sponsors, setSponsors] = useState([]);
+
+  useEffect(() => {
+    async function loadSponsors() {
+      const data = await fetchSponsors();
+      setSponsors(data);
+    }
+    loadSponsors();
+  }, []);
+
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900 bg-mesh-light pb-16 pt-20">
       {/* Page Hero */}
@@ -31,25 +42,47 @@ export default function SponsorPage() {
         {/* Our Sponsors Section */}
         <section className="space-y-6 w-full">
           <div className="max-w-3xl space-y-2">
-            <span className="text-slate-500 font-mono text-xs uppercase tracking-widest font-bold">Our Sponsors</span>
+            <span className="text-slate-500 font-mono text-xs uppercase tracking-widest font-bold">Our Partners</span>
             <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 font-heading">In good company.</h2>
             <p className="text-slate-600 text-base">
-              Confirmed sponsor names and marks will appear here after agreements are in place.
+              Organizations and community partners supporting PyData Prayagraj.
             </p>
           </div>
 
-          <div className="p-5 rounded-2xl bg-amber-50/90 border border-amber-200/80 text-amber-900 text-sm flex items-start gap-3 shadow-xs">
-            <span className="font-bold text-amber-800 shrink-0 font-mono uppercase tracking-wider text-xs bg-amber-200 px-2 py-0.5 rounded">Partner space available</span>
-            <span>This section intentionally has no sponsor logos until they are confirmed.</span>
-          </div>
-
-          <div>
-            <a
-              href="#partner"
-              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-2xl bg-slate-900 text-white font-bold text-base hover:bg-blue-600 transition-colors shadow-md"
-            >
-              <span>Sponsor us</span>
-            </a>
+          {/* Dynamic Sponsor Cards Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {sponsors.map((sp, idx) => (
+              <motion.div
+                key={sp.id || idx}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: idx * 0.1 }}
+                className="p-8 rounded-3xl bg-white border border-slate-200/80 shadow-md space-y-4 hover:shadow-xl transition-all"
+              >
+                <div className="h-16 flex items-center justify-start">
+                  {sp.logoUrl ? (
+                    <img src={sp.logoUrl} alt={sp.name} className="h-12 max-w-[180px] object-contain" />
+                  ) : (
+                    <span className="font-extrabold text-xl text-slate-900">{sp.name}</span>
+                  )}
+                </div>
+                <span className="inline-block px-3 py-0.5 rounded-full bg-amber-100 text-amber-900 text-xs font-mono font-bold uppercase">
+                  {sp.level || 'Partner'} Tier
+                </span>
+                <p className="text-slate-600 text-sm leading-relaxed">{sp.description}</p>
+                {sp.websiteUrl && (
+                  <a
+                    href={sp.websiteUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 text-xs font-mono font-bold text-blue-600 hover:text-blue-800"
+                  >
+                    <span>Visit Website</span>
+                    <ExternalLink className="w-3.5 h-3.5" />
+                  </a>
+                )}
+              </motion.div>
+            ))}
           </div>
         </section>
 
@@ -113,17 +146,16 @@ export default function SponsorPage() {
             <span className="text-blue-400 font-mono text-xs uppercase tracking-widest font-bold">Want to partner with us?</span>
             <h3 className="text-3xl sm:text-4xl font-extrabold font-heading">Start a conversation.</h3>
             <p className="text-slate-300 text-base sm:text-lg leading-relaxed">
-              Tell us about your organization and the kind of support or collaboration you have in mind. An official partnership contact route will be added here.
+              Tell us about your organization and the kind of support or collaboration you have in mind. Get in touch directly with our partnership team:
             </p>
             <div className="pt-3">
               <a
-                href="https://chat.whatsapp.com/EIaEqgTDw5d3zGT04Jsw1E"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-2xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-base transition-colors shadow-md"
+                href="mailto:pydata.prayagraj@gmail.com"
+                className="inline-flex items-center gap-3 px-8 py-4 rounded-2xl bg-white hover:bg-slate-100 text-slate-900 font-extrabold text-base sm:text-lg transition-all duration-300 shadow-xl hover:shadow-2xl hover:scale-[1.02] active:scale-95 group font-mono border border-slate-200/50"
               >
-                <span>Want to partner with us</span>
-                <ExternalLink className="w-4 h-4" />
+                <Mail className="w-5 h-5 text-blue-600 group-hover:scale-110 transition-transform" />
+                <span>pydata.prayagraj@gmail.com</span>
+                <ArrowRight className="w-4.5 h-4.5 text-slate-400 group-hover:translate-x-1 transition-transform" />
               </a>
             </div>
           </div>

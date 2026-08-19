@@ -64,7 +64,7 @@ pydata-prayagraj-react/
 │   │   ├── HomePage.jsx        # Landing page (Hero, Why PyData, About, Events)
 │   │   ├── AlbumsPage.jsx      # Filterable photo archive
 │   │   ├── JournalPage.jsx     # Blog & editorial notes queue
-│   │   ├── PeoplePage.jsx      # Organizers, Volunteers, & Ambassadors roster
+│   │   ├── TeamPage.jsx        # Organizers, Core Team, Volunteers, & Ambassadors roster
 │   │   ├── EventsPage.jsx      # Chapter event calendar & announcements
 │   │   ├── SponsorPage.jsx     # Partnership pillars & inquiry card
 │   │   ├── FaqPage.jsx         # Accordion FAQ guide

@@ -1,116 +1,135 @@
 import React, { useState, useEffect } from 'react';
-import { ChevronLeft, ChevronRight, MapPin } from 'lucide-react';
-
-const slides = [
-  {
-    src: '/glance/University.png',
-    title: 'University of Allahabad',
-    subtitle: 'Center of learning & research in Prayagraj'
-  },
-  {
-    src: '/glance/sangam.jpg',
-    title: 'Triveni Sangam',
-    subtitle: 'Confluence of sacred rivers'
-  },
-  {
-    src: '/glance/naini_bridge.jpg',
-    title: 'New Naini Bridge',
-    subtitle: 'Iconic cable-stayed bridge spanning Yamuna'
-  },
-  {
-    src: '/glance/mandapam.png',
-    title: 'Mandapam & Heritage',
-    subtitle: 'Architectural beauty of Prayagraj'
-  },
-  {
-    src: '/glance/High_Court.png',
-    title: 'High Court',
-    subtitle: 'Global gathering of culture & community'
-  }
-];
+import { Link } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
+import { fetchHeroImages } from '../services/api';
+import { ChevronRight, Sparkles } from 'lucide-react';
 
 export default function HeroSlideshow() {
+  const [heroImages, setHeroImages] = useState([]);
   const [activeIndex, setActiveIndex] = useState(0);
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setActiveIndex((prev) => (prev + 1) % slides.length);
-    }, 5000);
-    return () => clearInterval(timer);
+    async function loadHero() {
+      const imgs = await fetchHeroImages();
+      if (Array.isArray(imgs) && imgs.length > 0) {
+        setHeroImages(imgs);
+      }
+    }
+    loadHero();
+
+    const pollInterval = setInterval(loadHero, 4000);
+    return () => clearInterval(pollInterval);
   }, []);
 
-  const goToPrev = () => {
-    setActiveIndex((prev) => (prev === 0 ? slides.length - 1 : prev - 1));
-  };
+  const defaultImages = [
+    { id: 'default-1', imageUrl: '/pydata-community-hero.jpg', title: 'PyData Community Showcase' }
+  ];
 
-  const goToNext = () => {
-    setActiveIndex((prev) => (prev + 1) % slides.length);
-  };
+  const displayImages = heroImages.length > 0 ? heroImages : defaultImages;
+  const currentImage = displayImages[activeIndex % displayImages.length];
+
+  useEffect(() => {
+    const total = displayImages.length;
+    if (total <= 1) return;
+    const timer = setInterval(() => {
+      setActiveIndex((prev) => (prev + 1) % total);
+    }, 3000);
+    return () => clearInterval(timer);
+  }, [displayImages.length]);
 
   return (
-    <div className="absolute inset-0 w-full h-full overflow-hidden group z-0">
-      {/* Slides images */}
-      {slides.map((slide, idx) => (
-        <div
-          key={slide.src}
-          className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${idx === activeIndex ? 'opacity-100 z-10' : 'opacity-0 z-0'
-            }`}
-        >
-          <img
-            src={slide.src}
-            alt={slide.title}
-            className="w-full h-full object-cover transform scale-105 group-hover:scale-100 transition-transform duration-1000"
-          />
-          {/* Subtle light vignette & shadow gradient overlay for bright, light-opaque readability */}
-          <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-slate-900/20 to-slate-900/30"></div>
+    <div className="relative w-full max-w-7xl mx-auto px-4 sm:px-8 lg:px-12 py-10 sm:py-16">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
 
+        {/* LEFT COLUMN: Clean, Professional Photo Frame with Subtle Shadow */}
+        <div className="lg:col-span-7 flex justify-center items-center">
+          <div className="relative w-full max-w-[620px] select-none">
+            
+            {/* Elegant Background Accent Layer */}
+            <div className="absolute -inset-1.5 bg-slate-200/60 rounded-[32px] blur-sm transform -rotate-1 scale-[0.99] pointer-events-none"></div>
 
-          {/* Caption Overlay Badge at bottom left */}
-          <div className="absolute bottom-3 sm:bottom-6 left-4 sm:left-12 max-w-[calc(100%-80px)] sm:max-w-md z-20 text-white pointer-events-none">
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-950/85 backdrop-blur-md border border-white/20 text-[11px] sm:text-xs font-mono font-semibold text-white shadow-md mb-1">
-              <MapPin className="w-3 sm:w-3.5 h-3 sm:h-3.5 text-slate-300 shrink-0" />
-              <span className="truncate">{slide.title}</span>
+            {/* Main Showcase Card matching 16:9 landscape aspect ratio */}
+            <div className="relative w-full aspect-[16/9] rounded-3xl p-2.5 sm:p-3 bg-white border border-slate-200/90 shadow-[0_20px_50px_-15px_rgba(0,0,0,0.12)] z-10 flex flex-col">
+              
+              <div className="relative w-full h-full rounded-2xl overflow-hidden bg-slate-900">
+                <AnimatePresence mode="wait">
+                  <motion.img
+                    key={currentImage.id || activeIndex}
+                    src={currentImage.imageUrl}
+                    alt={currentImage.title || "PyData Community"}
+                    initial={{ opacity: 0, scale: 1.03 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.98 }}
+                    transition={{ duration: 0.7, ease: "easeInOut" }}
+                    className="w-full h-full object-cover object-center"
+                  />
+                </AnimatePresence>
+
+                {/* Subtle Image Title Caption Overlay */}
+                {currentImage.title && (
+                  <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent p-4 pt-10 text-white pointer-events-none">
+                    <p className="text-xs font-medium text-white/90 truncate">{currentImage.title}</p>
+                  </div>
+                )}
+              </div>
+
+              {/* Minimal Pagination Dots */}
+              {displayImages.length > 1 && (
+                <div className="pt-3 pb-1 flex items-center justify-center gap-1.5">
+                  {displayImages.map((img, idx) => (
+                    <button
+                      key={img.id || idx}
+                      onClick={() => setActiveIndex(idx)}
+                      className={`h-1.5 rounded-full transition-all duration-300 ${
+                        idx === activeIndex % displayImages.length 
+                          ? 'w-6 bg-[#f26522]' 
+                          : 'w-1.5 bg-slate-300 hover:bg-slate-400'
+                      }`}
+                      aria-label={`Go to slide ${idx + 1}`}
+                    />
+                  ))}
+                </div>
+              )}
             </div>
-            <p className="text-[11px] sm:text-sm font-medium text-slate-300 drop-shadow-sm truncate">
-              {slide.subtitle}
-            </p>
+
           </div>
         </div>
-      ))}
 
-      {/* Manual Slide Controls */}
-      <button
-        onClick={goToPrev}
-        className="absolute left-2 sm:left-8 top-1/2 -translate-y-1/2 z-20 w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-slate-950/60 hover:bg-white text-white hover:text-slate-950 backdrop-blur-md border border-white/30 shadow-lg flex items-center justify-center transition-all opacity-80 sm:opacity-0 sm:group-hover:opacity-100 active:scale-95"
-        aria-label="Previous slide"
-      >
-        <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
-      </button>
+        {/* RIGHT COLUMN: Professional Headline & Actions */}
+        <div className="lg:col-span-5 space-y-6 text-center lg:text-left">
+          <div className="space-y-3">
+            <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-100 border border-slate-200 text-slate-800 font-mono text-xs font-semibold tracking-wide">
+              <Sparkles className="w-3.5 h-3.5 text-[#f26522]" /> PyData Prayagraj Chapter
+            </span>
+            <h1 className="text-3xl sm:text-5xl lg:text-5xl font-extrabold text-slate-900 tracking-tight leading-[1.15] font-heading">
+              A community for developers and users of open source data tools
+            </h1>
+          </div>
 
-      <button
-        onClick={goToNext}
-        className="absolute right-2 sm:right-8 top-1/2 -translate-y-1/2 z-20 w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-slate-950/60 hover:bg-white text-white hover:text-slate-950 backdrop-blur-md border border-white/30 shadow-lg flex items-center justify-center transition-all opacity-80 sm:opacity-0 sm:group-hover:opacity-100 active:scale-95"
-        aria-label="Next slide"
-      >
-        <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
-      </button>
+          <p className="text-base sm:text-lg text-slate-600 font-normal leading-relaxed">
+            An emerging local chapter for developers, researchers, students, and practitioners in Prayagraj who build, learn, and innovate with Python and open-source data tools.
+          </p>
 
-      {/* Slide Indicators Dots */}
-      <div className="absolute bottom-3 sm:bottom-6 right-4 sm:right-12 z-20 flex items-center gap-1.5 sm:gap-2">
-        {slides.map((_, idx) => (
-          <button
-            key={idx}
-            onClick={() => setActiveIndex(idx)}
-            className={`h-2 sm:h-2.5 rounded-full transition-all duration-300 ${idx === activeIndex ? 'w-6 sm:w-8 bg-white shadow-md' : 'w-2 sm:w-2.5 bg-white/40 hover:bg-white'
-              }`}
-            aria-label={`Go to slide ${idx + 1}`}
-          />
-        ))}
+          <div className="pt-2 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
+            <a
+              href="https://www.meetup.com/pydata-prayagraj/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-sm shadow-lg hover:shadow-xl transition-all active:scale-95 group"
+            >
+              <span>Join the chapter</span>
+              <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </a>
+            <Link
+              to="/team"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-white hover:bg-slate-100 text-slate-900 border border-slate-300 font-semibold text-sm transition-all active:scale-95 shadow-xs"
+            >
+              <span>Meet the team</span>
+            </Link>
+          </div>
+        </div>
+
       </div>
-
-
-
     </div>
   );
-
 }
