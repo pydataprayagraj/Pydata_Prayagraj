@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { fetchHeroImages } from '../services/api';
+import { getAssetUrl } from '../utils/assets';
 import { ChevronRight, Sparkles } from 'lucide-react';
 
 export default function HeroSlideshow() {
@@ -20,16 +21,6 @@ export default function HeroSlideshow() {
     const pollInterval = setInterval(loadHero, 4000);
     return () => clearInterval(pollInterval);
   }, []);
-
-  const getAssetUrl = (url) => {
-    if (!url) return '';
-    if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('data:')) {
-      return url;
-    }
-    const cleanUrl = url.startsWith('/') ? url.slice(1) : url;
-    const base = import.meta.env.BASE_URL || './';
-    return base.endsWith('/') ? `${base}${cleanUrl}` : `${base}/${cleanUrl}`;
-  };
 
   const defaultImages = [
     { id: 'default-1', imageUrl: getAssetUrl('pydata-community-hero.jpg'), title: 'PyData Community Showcase' }

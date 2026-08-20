@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import HeroSlideshow from '../components/HeroSlideshow';
 import VideoCarousel from '../components/VideoCarousel';
 import { fetchEvents, formatDate } from '../services/api';
+import { getAssetUrl } from '../utils/assets';
 import {
   Sparkles,
   BookOpen,
@@ -51,6 +52,13 @@ export default function HomePage() {
         <HeroSlideshow />
       </section>
 
+      {/* Global PyData Video Showcase Carousel */}
+      <motion.section
+        {...fadeInUp}
+        className="py-16 px-6 sm:px-12 lg:px-16 xl:px-20 w-full"
+      >
+        <VideoCarousel />
+      </motion.section>
 
       {/* Intro Section: Why PyData */}
       <motion.section
@@ -128,7 +136,7 @@ export default function HomePage() {
               <div className="absolute -inset-6 rounded-full bg-slate-900/10 blur-2xl opacity-75 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
               <div className="relative p-3 rounded-full bg-white border border-slate-300 shadow-2xl overflow-hidden hover:scale-105 transition-transform duration-500">
                 <img
-                  src="/pydata-logo-circle.png"
+                  src={getAssetUrl('pydata-logo-circle.png')}
                   alt="PyData Prayagraj Emblem"
                   className="w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96 object-contain rounded-full"
                 />
@@ -220,16 +228,6 @@ export default function HomePage() {
           </div>
         </div>
       </motion.section>
-
-      {/* Global PyData Video Showcase Carousel */}
-      <motion.section
-        {...fadeInUp}
-        className="py-16 px-6 sm:px-12 lg:px-16 xl:px-20 w-full"
-      >
-        <VideoCarousel />
-      </motion.section>
-
-
 
       {/* Stay Close / Social Join Cards */}
       <motion.section

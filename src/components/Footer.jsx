@@ -25,12 +25,17 @@ export default function Footer({ pageSubtitle = 'Independent local community · 
 
           {/* Brand & Slogan Column */}
           <div className="lg:col-span-5 space-y-4 flex flex-col items-center md:items-start text-center md:text-left">
-            <Link to="/" className="inline-block group">
-              <img 
-                src="/email-sign.png" 
-                alt="PyData Prayagraj" 
-                className="h-12 w-auto object-contain bg-white/90 p-2 rounded-xl backdrop-blur-md shadow-md hover:brightness-110 transition-all"
-              />
+            <Link to="/" className="inline-block group py-0.5" aria-label="PyData Prayagraj Home">
+              <span className="font-black text-2xl sm:text-3xl tracking-tight leading-none font-heading flex items-center">
+                <img
+                  src={import.meta.env.BASE_URL ? (import.meta.env.BASE_URL.endsWith('/') ? `${import.meta.env.BASE_URL}pydata-icon.png` : `${import.meta.env.BASE_URL}/pydata-icon.png`) : './pydata-icon.png'}
+                  alt="PyData Logo"
+                  className="h-8 sm:h-9 w-auto object-contain transition-transform group-hover:scale-105 pr-3"
+                />
+                <span className="text-[#f26522]">Py</span>
+                <span className="text-[#2b74b8]">Data</span>{' '}
+                <span className="text-white font-extrabold group-hover:text-amber-400 transition-colors ml-1.5">Prayagraj</span>
+              </span>
             </Link>
 
             <h2 className="text-2xl font-extrabold text-white tracking-tight font-heading">

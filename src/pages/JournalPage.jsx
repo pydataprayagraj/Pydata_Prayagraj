@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Feather, Clock, Video, Play, User, Tag, Sparkles, Film, X } from 'lucide-react';
 import { fetchJournals, formatDate } from '../services/api';
+import { getAssetUrl } from '../utils/assets';
 
 function getYouTubeThumbnail(url) {
   if (!url) return null;
@@ -138,7 +139,7 @@ export default function JournalPage() {
             <AnimatePresence>
               {filteredPosts.map((post, idx) => {
                 const ytThumb = getYouTubeThumbnail(post.videoUrl);
-                const displayThumb = ytThumb || post.coverImage || '/pydata-community-hero.jpg';
+                const displayThumb = ytThumb || post.coverImage || getAssetUrl('pydata-community-hero.jpg');
 
                 return (
                   <motion.article

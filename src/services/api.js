@@ -1,3 +1,5 @@
+import { getAssetUrl } from '../utils/assets';
+
 // PyData Prayagraj Fast API Service Layer with Permanent Persistence
 const envApiUrl = import.meta.env.VITE_API_URL ? String(import.meta.env.VITE_API_URL).trim() : '';
 let rawApiUrl = envApiUrl;
@@ -475,7 +477,7 @@ export async function updateItem(resource, id, updatedData) {
 }
 
 const defaultHeroImages = [
-  { id: 'hero-1', title: 'PyData Community', imageUrl: '/pydata-community-hero.jpg' }
+  { id: 'hero-1', title: 'PyData Community', imageUrl: getAssetUrl('pydata-community-hero.jpg') }
 ];
 
 export async function fetchHeroImages() {
