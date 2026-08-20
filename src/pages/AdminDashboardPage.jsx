@@ -105,7 +105,7 @@ export default function AdminDashboardPage() {
     title: '', category: 'Community', coverImage: '', photos: []
   });
   const [teamForm, setTeamForm] = useState({
-    name: '', role: '', category: 'organizer', college: '', avatarUrl: '', initials: '', description: '', github: '', linkedin: ''
+    name: '', role: '', subRole: '', category: 'organizer', college: '', avatarUrl: '', initials: '', description: '', github: '', linkedin: ''
   });
   const [sponsorForm, setSponsorForm] = useState({
     name: '', level: 'gold', logoUrl: '', description: '', websiteUrl: ''
@@ -343,7 +343,7 @@ export default function AdminDashboardPage() {
       setTeam([...team, created]);
       setStatusMsg(`New ${teamForm.category} added successfully!`);
     }
-    setTeamForm({ name: '', role: '', category: 'organizer', college: '', avatarUrl: '', initials: '', description: '', github: '', linkedin: '' });
+    setTeamForm({ name: '', role: '', subRole: '', category: 'organizer', college: '', avatarUrl: '', initials: '', description: '', github: '', linkedin: '' });
     setLoading(false);
     setTimeout(() => setStatusMsg(''), 3000);
   };
@@ -353,6 +353,7 @@ export default function AdminDashboardPage() {
     setTeamForm({
       name: member.name || '',
       role: member.role || '',
+      subRole: member.subRole || '',
       category: member.category || 'organizer',
       college: member.college || '',
       avatarUrl: member.avatarUrl || '',
@@ -492,7 +493,7 @@ export default function AdminDashboardPage() {
   const cancelEdit = () => {
     setEditingId(null);
     setEventForm({ title: '', date: '', location: 'Prayagraj, UP · India', description: '', imageUrl: '', rsvpUrl: '' });
-    setTeamForm({ name: '', role: '', category: 'organizer', college: '', avatarUrl: '', initials: '', description: '', github: '', linkedin: '' });
+    setTeamForm({ name: '', role: '', subRole: '', category: 'organizer', college: '', avatarUrl: '', initials: '', description: '', github: '', linkedin: '' });
     setSponsorForm({ name: '', level: 'gold', logoUrl: '', description: '', websiteUrl: '' });
     setAlbumForm({ title: '', category: 'Community', coverImage: '', photos: [] });
     setJournalForm({
@@ -1716,15 +1717,32 @@ export default function AdminDashboardPage() {
                     </select>
                   </div>
                   <div>
-                    <label className="block text-xs font-mono text-slate-400 mb-1">Role Title</label>
+                    <label className="block text-xs font-mono text-slate-400 mb-1">Role Title / Designation</label>
                     <input
                       type="text"
                       value={teamForm.role}
                       onChange={(e) => setTeamForm({ ...teamForm, role: e.target.value })}
-                      placeholder="Lead / Technical Lead / Volunteer"
+                      placeholder="e.g. Co-Organizer / Organizer"
                       className="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-white text-sm focus:outline-none"
                     />
                   </div>
+                </div>
+
+                <div>
+                  <label className="block text-xs font-mono text-amber-400 font-semibold mb-1 flex items-center justify-between">
+                    <span>Sub-Role / Domain Role (Optional)</span>
+                    <span className="text-[10px] text-slate-500 font-normal">Displays below Co-Organizer</span>
+                  </label>
+                  <input
+                    type="text"
+                    value={teamForm.subRole || ''}
+                    onChange={(e) => setTeamForm({ ...teamForm, subRole: e.target.value })}
+                    placeholder="e.g. Technical & Workshops / Outreach & Growth"
+                    className="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-white text-sm focus:outline-none focus:border-amber-500"
+                  />
+                  <p className="text-[11px] font-mono text-slate-500 mt-1">
+                    If typed, this text displays directly underneath Co-Organizer on the member card. Leave blank if none.
+                  </p>
                 </div>
 
                 {(teamForm.category === 'volunteer' || teamForm.category === 'ambassador') && (

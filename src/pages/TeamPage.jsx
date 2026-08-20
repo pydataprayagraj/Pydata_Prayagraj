@@ -27,6 +27,25 @@ export default function TeamPage() {
     return 'Organizer';
   };
 
+  const getMainRole = (person) => {
+    if (!person) return '';
+    if (person.role && person.role.includes(' - ') && !person.subRole) {
+      return person.role.split(' - ')[0].trim();
+    }
+    return person.role || 'Organizer';
+  };
+
+  const getSubRole = (person) => {
+    if (!person) return null;
+    if (person.subRole && person.subRole.trim()) {
+      return person.subRole.trim();
+    }
+    if (person.role && person.role.includes(' - ')) {
+      return person.role.split(' - ').slice(1).join(' - ').trim();
+    }
+    return null;
+  };
+
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900 bg-mesh-light pb-16 pt-20">
       {/* Page Hero */}
@@ -73,6 +92,7 @@ export default function TeamPage() {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: idx * 0.08 }}
+                onMouseEnter={() => setSelectedMember(person)}
                 onClick={() => setSelectedMember(person)}
                 className="w-full bg-white p-8 rounded-3xl border-2 border-slate-200/90 shadow-md hover:shadow-2xl hover:border-amber-500 hover:-translate-y-2 transition-all duration-300 flex flex-col items-center text-center space-y-5 group cursor-pointer"
               >
@@ -92,8 +112,13 @@ export default function TeamPage() {
                     {person.name}
                   </h3>
                   <p className="text-sm font-mono text-amber-600 font-extrabold tracking-wider uppercase">
-                    {person.role || 'Organizer'}
+                    {getMainRole(person)}
                   </p>
+                  {getSubRole(person) && (
+                    <p className="text-xs font-mono text-amber-700 font-bold tracking-wider uppercase">
+                      {getSubRole(person)}
+                    </p>
+                  )}
                   <span className="inline-block px-3 py-1 rounded-full bg-amber-50 text-amber-900 text-[11px] font-mono font-bold mt-1 border border-amber-200/60">
                     Organizer · PyData Prayagraj
                   </span>
@@ -125,6 +150,7 @@ export default function TeamPage() {
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: idx * 0.08 }}
+                  onMouseEnter={() => setSelectedMember(person)}
                   onClick={() => setSelectedMember(person)}
                   className="w-full bg-white p-8 rounded-3xl border-2 border-slate-200/90 shadow-md hover:shadow-2xl hover:border-blue-500 hover:-translate-y-2 transition-all duration-300 flex flex-col items-center text-center space-y-5 group cursor-pointer"
                 >
@@ -144,8 +170,13 @@ export default function TeamPage() {
                       {person.name}
                     </h3>
                     <p className="text-sm font-mono text-blue-600 font-extrabold tracking-wider uppercase">
-                      {person.role || 'Core Member'}
+                      {getMainRole(person)}
                     </p>
+                    {getSubRole(person) && (
+                      <p className="text-xs font-mono text-blue-700 font-bold tracking-wider uppercase">
+                        {getSubRole(person)}
+                      </p>
+                    )}
                     <span className="inline-block px-3 py-1 rounded-full bg-blue-50 text-blue-800 text-[11px] font-mono font-bold mt-1 border border-blue-200/60">
                       Core Team
                     </span>
@@ -178,6 +209,7 @@ export default function TeamPage() {
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.4, delay: idx * 0.08 }}
+                  onMouseEnter={() => setSelectedMember(person)}
                   onClick={() => setSelectedMember(person)}
                   className="w-full bg-white p-4 sm:p-6 rounded-3xl border border-slate-200/80 shadow-xs hover:shadow-md hover:border-emerald-400 transition-all duration-200 flex flex-col items-center text-center space-y-3 cursor-pointer group"
                 >
@@ -225,6 +257,7 @@ export default function TeamPage() {
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.4, delay: idx * 0.08 }}
+                  onMouseEnter={() => setSelectedMember(person)}
                   onClick={() => setSelectedMember(person)}
                   className="w-full bg-white p-4 sm:p-6 rounded-3xl border border-slate-200/80 shadow-xs hover:shadow-md hover:border-purple-400 transition-all duration-200 flex flex-col items-center text-center space-y-3 cursor-pointer group"
                 >
@@ -297,6 +330,7 @@ export default function TeamPage() {
           <div
             className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4 sm:p-6 overflow-y-auto"
             onClick={() => setSelectedMember(null)}
+            onMouseLeave={() => setSelectedMember(null)}
           >
             <motion.div
               initial={{ opacity: 0, scale: 0.9, y: 20 }}
@@ -340,9 +374,14 @@ export default function TeamPage() {
                   <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 font-heading">
                     {selectedMember.name}
                   </h2>
-                  <p className="text-sm font-mono text-blue-600 font-extrabold uppercase tracking-wider mt-1">
-                    {selectedMember.role || getCategoryLabel(selectedMember.category)}
+                  <p className="text-sm font-mono text-amber-600 font-extrabold uppercase tracking-wider mt-1">
+                    {getMainRole(selectedMember)}
                   </p>
+                  {getSubRole(selectedMember) && (
+                    <p className="text-xs font-mono text-amber-700 font-bold uppercase tracking-wider mt-0.5">
+                      {getSubRole(selectedMember)}
+                    </p>
+                  )}
                 </div>
 
                 {/* Member Bio / Description - ONLY FOR ORGANIZERS */}

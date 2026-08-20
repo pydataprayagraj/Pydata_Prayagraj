@@ -19,6 +19,25 @@ export default function PeoplePage() {
   const volunteers = teamMembers.filter(m => m.category === 'volunteer');
   const ambassadors = teamMembers.filter(m => m.category === 'ambassador');
 
+  const getMainRole = (person) => {
+    if (!person) return '';
+    if (person.role && person.role.includes(' - ') && !person.subRole) {
+      return person.role.split(' - ')[0].trim();
+    }
+    return person.role || 'Organizer';
+  };
+
+  const getSubRole = (person) => {
+    if (!person) return null;
+    if (person.subRole && person.subRole.trim()) {
+      return person.subRole.trim();
+    }
+    if (person.role && person.role.includes(' - ')) {
+      return person.role.split(' - ').slice(1).join(' - ').trim();
+    }
+    return null;
+  };
+
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900 bg-mesh-light pb-16 pt-20">
       {/* Page Hero */}
@@ -63,6 +82,7 @@ export default function PeoplePage() {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: idx * 0.08 }}
+                onMouseEnter={() => setSelectedMember(person)}
                 onClick={() => setSelectedMember(person)}
                 className="w-full bg-white p-8 rounded-3xl border-2 border-slate-200/90 shadow-md hover:shadow-2xl hover:border-blue-500 hover:-translate-y-2 transition-all duration-300 flex flex-col items-center text-center space-y-5 group cursor-pointer"
               >
@@ -82,8 +102,13 @@ export default function PeoplePage() {
                     {person.name}
                   </h3>
                   <p className="text-sm font-mono text-blue-600 font-extrabold tracking-wider uppercase">
-                    {person.role || 'Organizer'}
+                    {getMainRole(person)}
                   </p>
+                  {getSubRole(person) && (
+                    <p className="text-xs font-mono text-blue-700 font-bold uppercase tracking-wider">
+                      {getSubRole(person)}
+                    </p>
+                  )}
                   <span className="inline-block px-3 py-1 rounded-full bg-blue-50 text-blue-800 text-[11px] font-mono font-bold mt-1">
                     PyData Prayagraj
                   </span>
@@ -206,6 +231,7 @@ export default function PeoplePage() {
           <div 
             className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4 sm:p-6"
             onClick={() => setSelectedMember(null)}
+            onMouseLeave={() => setSelectedMember(null)}
           >
             <motion.div 
               initial={{ opacity: 0, scale: 0.9, y: 20 }}
