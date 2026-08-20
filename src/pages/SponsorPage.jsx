@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Handshake, Mail, ArrowRight } from 'lucide-react';
+import { Handshake, ExternalLink } from 'lucide-react';
 import { fetchSponsors } from '../services/api';
 
 export default function SponsorPage() {
@@ -146,17 +146,18 @@ export default function SponsorPage() {
             <span className="text-blue-400 font-mono text-xs uppercase tracking-widest font-bold">Want to partner with us?</span>
             <h3 className="text-3xl sm:text-4xl font-extrabold font-heading">Start a conversation.</h3>
             <p className="text-slate-300 text-base sm:text-lg leading-relaxed">
-              Tell us about your organization and the kind of support or collaboration you have in mind. Get in touch directly with our partnership team:
+              Tell us about your organization and the kind of support or collaboration you have in mind.
             </p>
             <div className="pt-3">
-              <a
-                href="mailto:pydata.prayagraj@gmail.com"
-                className="inline-flex items-center gap-3 px-8 py-4 rounded-2xl bg-white hover:bg-slate-100 text-slate-900 font-extrabold text-base sm:text-lg transition-all duration-300 shadow-xl hover:shadow-2xl hover:scale-[1.02] active:scale-95 group font-mono border border-slate-200/50"
-              >
-                <Mail className="w-5 h-5 text-blue-600 group-hover:scale-110 transition-transform" />
-                <span>pydata.prayagraj@gmail.com</span>
-                <ArrowRight className="w-4.5 h-4.5 text-slate-400 group-hover:translate-x-1 transition-transform" />
-              </a>
+              <div className="p-6 rounded-2xl bg-white/10 border border-white/15 backdrop-blur-sm space-y-2">
+                <div className="flex items-center gap-2.5 text-amber-300 font-semibold text-base font-heading">
+                  <Handshake className="w-5 h-5" />
+                  <span>Partnership & Sponsorship Opportunities</span>
+                </div>
+                <p className="text-slate-300 text-sm leading-relaxed">
+                  We welcome community partners, educational institutions, and technology organizations to support open source, tech education, and developer events in Prayagraj. Connect with our organizers at our upcoming events to collaborate!
+                </p>
+              </div>
             </div>
           </div>
         </motion.section>
