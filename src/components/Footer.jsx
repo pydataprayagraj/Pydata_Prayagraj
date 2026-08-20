@@ -142,16 +142,8 @@ export default function Footer({ pageSubtitle = 'Independent local community · 
           </p>
 
           <p className="text-slate-400 font-mono text-center sm:text-right flex items-center justify-center sm:justify-end gap-1.5 flex-wrap">
-            <span>Prepared by</span>
-            <a
-              href="https://portfolioanimeshpathak.netlify.app"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-amber-400 hover:text-amber-300 font-bold underline underline-offset-4 decoration-amber-400/50 hover:decoration-amber-300 transition-colors inline-flex items-center gap-1 cursor-pointer"
-            >
-              <span>Animesh Pathak</span>
-              <ExternalLink className="w-3 h-3 text-amber-400" />
-            </a>
+            <span>Designed & Developed by</span>
+            <span className="text-white font-bold">Animesh Pathak</span>
           </p>
         </div>
 
