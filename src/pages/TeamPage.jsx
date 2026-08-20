@@ -46,6 +46,27 @@ export default function TeamPage() {
     return null;
   };
 
+  const hoverTimerRef = React.useRef(null);
+
+  const handleMemberHover = (person) => {
+    if (hoverTimerRef.current) clearTimeout(hoverTimerRef.current);
+    hoverTimerRef.current = setTimeout(() => {
+      setSelectedMember(person);
+    }, 400);
+  };
+
+  const handleMemberLeave = () => {
+    if (hoverTimerRef.current) {
+      clearTimeout(hoverTimerRef.current);
+    }
+    setSelectedMember(null);
+  };
+
+  const handleMemberClick = (person) => {
+    if (hoverTimerRef.current) clearTimeout(hoverTimerRef.current);
+    setSelectedMember(person);
+  };
+
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900 bg-mesh-light pb-16 pt-20">
       {/* Page Hero */}
@@ -92,8 +113,9 @@ export default function TeamPage() {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: idx * 0.08 }}
-                onMouseEnter={() => setSelectedMember(person)}
-                onClick={() => setSelectedMember(person)}
+                onMouseEnter={() => handleMemberHover(person)}
+                onMouseLeave={() => handleMemberLeave()}
+                onClick={() => handleMemberClick(person)}
                 className="w-full bg-white p-8 rounded-3xl border-2 border-slate-200/90 shadow-md hover:shadow-2xl hover:border-amber-500 hover:-translate-y-2 transition-all duration-300 flex flex-col items-center text-center space-y-5 group cursor-pointer"
               >
                 {person.avatarUrl ? (
@@ -162,8 +184,9 @@ export default function TeamPage() {
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: idx * 0.08 }}
-                  onMouseEnter={() => setSelectedMember(person)}
-                  onClick={() => setSelectedMember(person)}
+                  onMouseEnter={() => handleMemberHover(person)}
+                  onMouseLeave={() => handleMemberLeave()}
+                  onClick={() => handleMemberClick(person)}
                   className="w-full bg-white p-8 rounded-3xl border-2 border-slate-200/90 shadow-md hover:shadow-2xl hover:border-blue-500 hover:-translate-y-2 transition-all duration-300 flex flex-col items-center text-center space-y-5 group cursor-pointer"
                 >
                   {person.avatarUrl ? (
@@ -233,8 +256,9 @@ export default function TeamPage() {
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.4, delay: idx * 0.08 }}
-                  onMouseEnter={() => setSelectedMember(person)}
-                  onClick={() => setSelectedMember(person)}
+                  onMouseEnter={() => handleMemberHover(person)}
+                  onMouseLeave={() => handleMemberLeave()}
+                  onClick={() => handleMemberClick(person)}
                   className="w-full bg-white p-4 sm:p-6 rounded-3xl border border-slate-200/80 shadow-xs hover:shadow-md hover:border-emerald-400 transition-all duration-200 flex flex-col items-center text-center space-y-3 cursor-pointer group"
                 >
                   {person.avatarUrl ? (
@@ -281,8 +305,9 @@ export default function TeamPage() {
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.4, delay: idx * 0.08 }}
-                  onMouseEnter={() => setSelectedMember(person)}
-                  onClick={() => setSelectedMember(person)}
+                  onMouseEnter={() => handleMemberHover(person)}
+                  onMouseLeave={() => handleMemberLeave()}
+                  onClick={() => handleMemberClick(person)}
                   className="w-full bg-white p-4 sm:p-6 rounded-3xl border border-slate-200/80 shadow-xs hover:shadow-md hover:border-purple-400 transition-all duration-200 flex flex-col items-center text-center space-y-3 cursor-pointer group"
                 >
                   {person.avatarUrl ? (
