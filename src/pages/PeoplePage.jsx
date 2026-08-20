@@ -75,7 +75,7 @@ export default function PeoplePage() {
             <div className="w-16 h-1 bg-gradient-to-r from-blue-600 via-amber-500 to-blue-600 rounded-full mx-auto mt-2"></div>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 justify-items-center">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 sm:gap-8 justify-items-center">
             {organizers.map((person, idx) => (
               <motion.article 
                 key={person.id || idx} 
@@ -83,31 +83,29 @@ export default function PeoplePage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: idx * 0.08 }}
                 onClick={() => setSelectedMember(person)}
-                className="w-full bg-white p-8 rounded-3xl border-2 border-slate-200/90 shadow-md hover:shadow-2xl hover:border-blue-500 hover:-translate-y-2 transition-all duration-300 flex flex-col items-center text-center space-y-5 group cursor-pointer"
+                className="w-full bg-white p-5 rounded-3xl border-2 border-slate-200/90 shadow-md hover:shadow-2xl hover:border-blue-500 hover:-translate-y-2 transition-all duration-300 flex flex-col items-center text-center space-y-4 group cursor-pointer"
               >
                 {person.avatarUrl ? (
                   <img 
                     src={person.avatarUrl} 
                     alt={person.name} 
-                    className="w-44 h-44 sm:w-48 sm:h-48 rounded-3xl object-cover shadow-lg group-hover:scale-105 transition-transform duration-300" 
+                    className="w-36 h-36 sm:w-40 sm:h-40 rounded-2xl object-cover shadow-lg group-hover:scale-105 transition-transform duration-300" 
                   />
                 ) : (
-                  <div className="w-44 h-44 sm:w-48 sm:h-48 rounded-3xl bg-gradient-to-tr from-blue-600 via-blue-500 to-amber-500 text-white flex items-center justify-center text-4xl font-black font-mono shadow-lg group-hover:scale-105 transition-transform duration-300">
+                  <div className="w-36 h-36 sm:w-40 sm:h-40 rounded-2xl bg-gradient-to-tr from-blue-600 via-blue-500 to-amber-500 text-white flex items-center justify-center text-3xl font-black font-mono shadow-lg group-hover:scale-105 transition-transform duration-300">
                     {person.initials || 'PY'}
                   </div>
                 )}
-                <div className="space-y-1">
-                  <h3 className="text-2xl font-black text-slate-900 font-heading group-hover:text-blue-600 transition-colors">
+                <div className="space-y-1 w-full overflow-hidden">
+                  <h3 className="text-base sm:text-lg lg:text-xl font-black text-slate-900 font-heading group-hover:text-blue-600 transition-colors whitespace-nowrap overflow-hidden text-ellipsis w-full" title={person.name}>
                     {person.name}
                   </h3>
-                  <p className="text-sm font-mono text-blue-600 font-extrabold tracking-wider uppercase">
+                  <p className="text-xs font-mono text-blue-600 font-extrabold tracking-wider uppercase whitespace-nowrap overflow-hidden text-ellipsis">
                     {getMainRole(person)}
                   </p>
-                  {getSubRole(person) && (
-                    <p className="text-xs font-mono text-blue-700 font-bold uppercase tracking-wider">
-                      {getSubRole(person)}
-                    </p>
-                  )}
+                  <p className="text-[10px] sm:text-[10.5px] font-mono text-blue-700 font-bold tracking-tight uppercase whitespace-nowrap overflow-hidden text-ellipsis w-full min-h-[16px] block">
+                    {getSubRole(person) || '\u00A0'}
+                  </p>
                   {person.linkedin ? (
                     <a
                       href={person.linkedin}
