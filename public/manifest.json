@@ -1,0 +1,21 @@
+{
+  "name": "PyData Prayagraj",
+  "short_name": "PyData PRG",
+  "description": "PyData Prayagraj - Official NumFOCUS Python and Data Science Community Chapter",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#f26522",
+  "icons": [
+    {
+      "src": "/pydata-logo-circle.png",
+      "sizes": "192x192 512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "/pydata-icon.png",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/png"
+    }
+  ]
+}

@@ -1,4 +1,7 @@
 User-agent: *
 Allow: /
+Disallow: /#/mainuser
+Disallow: /mainuser
 
+Host: https://prayagraj.pydata.org
 Sitemap: https://prayagraj.pydata.org/sitemap.xml
