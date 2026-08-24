@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+        xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+        http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+
+  <!-- PyData Prayagraj Home -->
+  <url>
+    <loc>https://prayagraj.pydata.org/</loc>
+    <lastmod>2026-08-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://prayagraj.pydata.org/pydata-logo-circle.png</image:loc>
+      <image:title>PyData Prayagraj Community Logo</image:title>
+      <image:caption>Official PyData Prayagraj Python and Data Science Community</image:caption>
+    </image:image>
+  </url>
+
+  <!-- Events Page -->
+  <url>
+    <loc>https://prayagraj.pydata.org/#/events</loc>
+    <lastmod>2026-08-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Team & Organizers Page -->
+  <url>
+    <loc>https://prayagraj.pydata.org/#/team</loc>
+    <lastmod>2026-08-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Journal & Blog Page -->
+  <url>
+    <loc>https://prayagraj.pydata.org/#/blogs</loc>
+    <lastmod>2026-08-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Photo Albums Page -->
+  <url>
+    <loc>https://prayagraj.pydata.org/#/albums</loc>
+    <lastmod>2026-08-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Sponsor & Partnership Page -->
+  <url>
+    <loc>https://prayagraj.pydata.org/#/sponsor</loc>
+    <lastmod>2026-08-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- FAQ Page -->
+  <url>
+    <loc>https://prayagraj.pydata.org/#/faq</loc>
+    <lastmod>2026-08-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <!-- Code of Conduct & Privacy Page -->
+  <url>
+    <loc>https://prayagraj.pydata.org/#/privacy</loc>
+    <lastmod>2026-08-24</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+</urlset>
