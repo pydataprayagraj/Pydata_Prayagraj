@@ -208,7 +208,7 @@ export default function HomePage() {
           {/* Enhanced Stats Grid */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {[
-              { label: 'Community members', val: '5' },
+              { label: 'Community members', val: '270+' },
               { label: 'Events hosted', val: '0' },
               { label: 'Volunteer speakers', val: '0' },
               { label: 'Workshops', val: '0' }
