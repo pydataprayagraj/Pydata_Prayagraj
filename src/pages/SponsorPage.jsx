@@ -17,7 +17,7 @@ export default function SponsorPage() {
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900 bg-mesh-light pb-16 pt-20">
       {/* Page Hero */}
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
@@ -38,7 +38,7 @@ export default function SponsorPage() {
 
       {/* Main Content */}
       <div className="py-12 px-6 sm:px-12 lg:px-16 xl:px-20 w-full space-y-16">
-        
+
         {/* Our Sponsors Section */}
         <section className="space-y-6 w-full">
           <div className="max-w-3xl space-y-2">
@@ -87,7 +87,7 @@ export default function SponsorPage() {
         </section>
 
         {/* Why Partner Section */}
-        <motion.section 
+        <motion.section
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
@@ -129,11 +129,11 @@ export default function SponsorPage() {
         </motion.section>
 
         {/* Let's Collaborate Section */}
-        <motion.section 
+        <motion.section
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          id="partner" 
+          id="partner"
           className="rounded-3xl bg-slate-900 text-white p-8 sm:p-14 lg:p-16 shadow-xl grid grid-cols-1 lg:grid-cols-12 gap-8 items-center w-full"
         >
           <div className="lg:col-span-4">
@@ -149,14 +149,25 @@ export default function SponsorPage() {
               Tell us about your organization and the kind of support or collaboration you have in mind.
             </p>
             <div className="pt-3">
-              <div className="p-6 rounded-2xl bg-white/10 border border-white/15 backdrop-blur-sm space-y-2">
+              <div className="p-6 rounded-2xl bg-white/10 border border-white/15 backdrop-blur-sm space-y-4">
                 <div className="flex items-center gap-2.5 text-amber-300 font-semibold text-base font-heading">
                   <Handshake className="w-5 h-5" />
                   <span>Partnership & Sponsorship Opportunities</span>
                 </div>
                 <p className="text-slate-300 text-sm leading-relaxed">
-                  We welcome community partners, educational institutions, and technology organizations to support open source, tech education, and developer events in Prayagraj. Connect with our organizers at our upcoming events to collaborate!
+                  We welcome community partners, educational institutions, and technology organizations to support open source, tech education, and developer events in Prayagraj. Connect with our organizers to collaborate!
                 </p>
+                <div>
+                  <a
+                    href="https://forms.gle/jWdz6ZoZkHZ3WqW27"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold text-sm sm:text-base transition-all active:scale-95 shadow-md"
+                  >
+                    <span>Become a Sponsor</span>
+                    <ExternalLink className="w-4 h-4" />
+                  </a>
+                </div>
               </div>
             </div>
           </div>
